@@ -1,31 +1,30 @@
-name: CI Test Workflow  # نام Workflow
+name: Run Tests on Push
 
 on:
-  push:  # اجرا در زمان Push
+  push:
     branches:
-      - main  # فقط وقتی به شاخه main Push شود
-  pull_request:  # اجرا هنگام ایجاد Pull Request
+      - main   # فقط در صورت Push به شاخه اصلی اجرا شود
+  pull_request:
     branches:
-      - main
+      - main   # در صورت ایجاد Pull Request اجرا شود
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # اجرای Job روی ماشین لینوکس
+    runs-on: ubuntu-latest   # استفاده از سیستم عامل اوبونتو برای اجرای تست‌ها
 
     steps:
-    - name: Checkout Code  # دانلود کد مخزن
-      uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3  # گیت‌هاب کد شما را چک‌اوت می‌کند
 
-    - name: Set up Python  # نصب نسخه مشخصی از Python
+    - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # نسخه Python
+        python-version: '3.9'   # تنظیم نسخه پایتون
 
-    - name: Install dependencies  # نصب وابستگی‌ها
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r requirements.txt  # نصب وابستگی‌ها از فایل requirements.txt
 
-    - name: Run tests  # اجرای تست‌ها
-      run: |
-        pytest
+    - name: Run tests
+      run: pytest  # اجرای تست‌ها با pytest
